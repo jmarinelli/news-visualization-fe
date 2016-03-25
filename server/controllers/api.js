@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/statistics', function(req, res, next) {
-  unirest.get('http://localhost:8080/news-visualization/api/statistics')
+  unirest.get('https://news-visualization-be.herokuapp.com/news-visualization/api/statistics')
       .header('Accept', 'application/json')
       .query(req.query)
       .end(function(response) {
