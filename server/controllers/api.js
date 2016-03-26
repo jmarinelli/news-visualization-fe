@@ -13,8 +13,9 @@ router.get('/statistics', function(req, res, next) {
 });
 
 router.get('/statistics/word-count', function(req, res, next) {
-  unirest.get('http://localhost:8080/news-visualization/api/statistics/word-count')
+  unirest.get('https://news-visualization-be.herokuapp.com/news-visualization/api/statistics/word-count')
       .header('Accept', 'application/json')
+      .header('Accept-Encoding', 'gzip, deflate')
       .query(req.query)
       .end(function(response) {
         res.status(response.status).json(formatWordCountResponse(response.body));
