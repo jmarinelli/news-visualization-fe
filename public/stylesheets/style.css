@@ -11,4 +11,18 @@ svg {
   left: 600px;
   top: 370px; }
 
+.dates {
+  display: inline-block; }
+
+.mediaChooser {
+  margin-top: 20px;
+  display: block; }
+
+.mediaSelect {
+  width: 500px; }
+
+.refreshButton {
+  margin-top: 20px;
+  width: 400px; }
+
 /*# sourceMappingURL=style.css.map */
