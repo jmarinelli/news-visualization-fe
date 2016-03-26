@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/word-cloud', function(req, res, next) {
+  res.render('word-cloud', { title: 'Word Cloud' });
+});
+
 module.exports = router;
