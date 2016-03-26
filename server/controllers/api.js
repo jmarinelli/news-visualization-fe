@@ -42,6 +42,7 @@ function formatWordCountResponse(response) {
 };
 
 function flattenStatisticsResponse(response) {
+  if (response == undefined) return [];
   return response.reduce(function(acum, it) {
     return acum.concat(it.stats.reduce(function(prev, stat){
       return prev.concat([{media: it.value, date: stat.value, count: stat.count}]);
