@@ -5,6 +5,12 @@ body {
 a {
   color: #00B7FF; }
 
+svg {
+  overflow: visible !important;
+  position: relative;
+  left: 600px;
+  top: 370px; }
+
 .dates {
   display: inline-block; }
 
