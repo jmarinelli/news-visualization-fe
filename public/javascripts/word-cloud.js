@@ -5,6 +5,7 @@ $.get(
         var fill = d3.scale.category20();
         var draw = function(words) {
             d3.select("body").append("svg")
+                .attr("class", "word-cloud")
                 .attr("width", window.screen.width)
                 .attr("height", window.screen.height)
                 .append("g")
