@@ -2,7 +2,17 @@ var hitslineChart = dc.seriesChart("#chart-line-hitsperday");
 var ndx, dateDim, counts, minDate, maxDate;
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
-refresh("2016-01-01", "2016-01-20")
+refresh("2016-01-01", "2016-01-20");
+
+d3.json("api/media", function(error, media) {
+    media.forEach(function(d){
+        $('#mediaChooser')
+            .append($("<option></option>")
+                .attr("value", d)
+                .text(d));
+    });
+    $(".chosen-select").chosen({max_selected_options: 5});
+});
 
 $(function() {
     $.datepicker.setDefaults(
