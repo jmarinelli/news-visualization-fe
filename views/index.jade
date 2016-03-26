@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  div(id="chart-line-hitsperday")
-  div(id="startDate" onSelect="refresh()") Start date
-  div(id="endDate") End date
+  div(id="chart-line-hitsperday" class="graphic")
+  div(class="dates")
+    div(id="startDate" onSelect="refresh()") Start date
+    div(id="endDate") End date
   script(type="text/javascript" src="javascripts/app.js")
   button(onClick="refresh()") Refresh
