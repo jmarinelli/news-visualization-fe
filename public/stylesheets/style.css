@@ -6,21 +6,17 @@ a {
   color: #00B7FF; }
 
 .dates {
-  display: inline-block;
-}
+  display: inline-block; }
 
 .mediaChooser {
   margin-top: 20px;
-  display: block;
-}
+  display: block; }
 
 .mediaSelect {
-  width: 500px;
-}
+  width: 500px; }
 
 .refreshButton {
   margin-top: 20px;
-  width: 400px;
-}
+  width: 400px; }
 
 /*# sourceMappingURL=style.css.map */

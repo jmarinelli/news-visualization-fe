@@ -2,7 +2,10 @@ var hitslineChart = dc.seriesChart("#chart-line-hitsperday");
 var ndx, dateDim, counts, minDate, maxDate;
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
-refresh("2016-01-01", "2016-01-20");
+var defaultStartDate = "2016-01-01";
+var defaultEndDate = "2016-01-20";
+
+refresh(defaultStartDate, defaultEndDate);
 
 d3.json("api/media", function(error, media) {
     media.forEach(function(d){
@@ -11,7 +14,7 @@ d3.json("api/media", function(error, media) {
                 .attr("value", d)
                 .text(d));
     });
-    $(".chosen-select").chosen({max_selected_options: 5});
+    $(".chosen-select").chosen();
 });
 
 $(function() {
@@ -26,7 +29,22 @@ function refresh(startDate, endDate) {
     if (startDate == null) startDate = $("#startDate").data('datepicker').getFormattedDate('yyyy-mm-dd');
     if (endDate == null) endDate = $("#endDate").data('datepicker').getFormattedDate('yyyy-mm-dd');
 
-    var url = "api/statistics?from=" + startDate + "&to=" + endDate;
+    // TODO: Remove this and do it nicely.
+    if (startDate == "") startDate = defaultStartDate;
+    if (endDate == "") endDate = defaultEndDate;
+
+    var media = $('#mediaChooser').val();
+    var mediaQuery = "";
+    if (media != null) {
+        mediaQuery += "&media=";
+
+        media.forEach(function(media){
+            mediaQuery += media;
+            mediaQuery += ",";
+        });
+    }
+
+    var url = "api/statistics?from=" + startDate + "&to=" + endDate + mediaQuery;
     d3.json(url, function(error, experiments) {
         ndx = crossfilter(experiments);
         experiments.forEach(function(d){
