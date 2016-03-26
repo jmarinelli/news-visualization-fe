@@ -23,7 +23,13 @@ router.get('/statistics/word-count', function(req, res, next) {
 });
 
 function formatWordCountResponse(response) {
-  return response.map(function(d) { return { text: d.word, size: d.quantity } });
+  var myMax = 100, myMin = 10;
+  return response.word_count.map(function(d) {
+    return {
+      text: d.word,
+      size: ((d.quantity - response.min) / (response.max - response.min)) * (myMax - myMin) + myMin
+    }
+  });
 }
 
 function flattenStatisticsResponse(response) {
