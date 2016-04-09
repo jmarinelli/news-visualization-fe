@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/categories.css')
+    select(id="categoryChooser")
+    h4 Start date
+        input(type="date" data-date-format="yyyy-mm-dd" value="2016-01-05" id="startDate")
+    h4 End date
+        input(type="date" data-date-format="yyyy-mm-dd" value="2016-01-06" id="endDate")
+    button(class="refreshButton" onClick="refresh()") Generate
+    div(id='chart')
+    script(type="text/javascript" src="javascripts/categories.js")
