@@ -33,3 +33,12 @@ h4 {
 .refreshButton {
     display: block;
 }
+
+.chart {
+    display: block;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}

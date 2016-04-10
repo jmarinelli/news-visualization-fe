@@ -11,79 +11,55 @@ d3.json("api/categories", function(error, media) {
 
 function refresh() {
     d3.select("svg").remove();
+    d3.select("svg").remove();
 
     var url = "api/by-category?from=" + $("#startDate").val() + "&to=" + $("#endDate").val() + "&category=" + $('#categoryChooser').val();
     d3.json(url, function(error, data) {
-        // Dimensions
-        var margin = {
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 200
-            },
-            width = parseInt(d3.select('#chart').style('width'), 10),
-            width = width - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom,
-            barHeight = 40,
-            percent = d3.format('%');
+        var ndx = crossfilter(data),
+            mediaDimension  = ndx.dimension(function(d) {return d.media;}),
+            countGroup = mediaDimension.group().reduceSum(function(d) {return d.count;});
 
-        // Create the scale for the axis
-        var xScale = d3.scale.linear()
-            .range([0, width]); // the pixel range to map to
-
-        var yScale = d3.scale.ordinal()
-            // SECOND PARAM IS PADDING
-            .rangeRoundBands([0, height], 0.5);
-
-        // Create the axis
-        var xAxis = d3.svg.axis()
-            .scale(xScale)
-            .orient('bottom')
-            .ticks(5);
-
-        var yAxis = d3.svg.axis()
-            .scale(yScale)
-            .orient('left');
-
-        // TODO: Use max for range
-        var max = d3.max(data, function(d) { return d.count; })
-
-        xScale.domain([0, max]); // min/max extent of your data (this is usually dynamic e.g. max)
-        yScale.domain(data.map(function (d) {
-            return d.media;
-        }));
-
-        // Render the SVG
-        var svg = d3.select('#chart')
-            .append('svg')
-            .attr('height', height + margin.top + margin.bottom)
-            .append('g') // Group the content and add margin
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-        // Render the axis
-        svg.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis);
-
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis);
-
-        // Render the bars
-        svg.selectAll('.bar')
-            .data(data)
-            .enter()
-            .append('rect')
-            .attr('class', 'bar')
-            .attr('y', function (d) {
-                return yScale(d.media);
-            })
-            .attr('width', function (d) {
-                return xScale(d.count)
-            })
-            .attr('height', yScale.rangeBand);
+        rowChart(ndx, mediaDimension, countGroup);
+        pieChart(ndx, mediaDimension, countGroup);
 
         $("svg").width(1200);
     });
+}
+
+function rowChart(ndx, mediaDimension, countGroup) {
+    var chart = dc.rowChart("#rowChart");
+
+    // row chart day of week
+    chart.width(1000)
+        .height(500)
+        .margins({top: 5, left: 10, right: 10, bottom: 20})
+        .dimension(mediaDimension)
+        .group(countGroup)
+        .colors(d3.scale.category10())
+        .ordering(function(d){return -d.value;})
+        .label(function (d){
+            return d.key;
+        })
+        .title(function(d){return d.value;})
+        .elasticX(true)
+        .xAxis().ticks(4);
+    chart.render();
+}
+
+function pieChart(ndx, mediaDimension, countGroup) {
+    var chart = dc.pieChart("#pieChart");
+    chart
+        .width(768)
+        .height(480)
+        .slicesCap(10)
+        .innerRadius(100)
+        .dimension(mediaDimension)
+        .group(countGroup)
+        .legend(dc.legend())
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
+            })
+        });
+    chart.render();
 }

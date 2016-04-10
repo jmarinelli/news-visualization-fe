@@ -49,6 +49,15 @@ router.get('/by-category', function(req, res, next) {
       });
 });
 
+router.get('/titles', function(req, res, next) {
+    unirest.get('http://news-visualization-be.herokuapp.com/news-visualization/api/titles')
+        .header('Accept', 'application/json')
+        .query(req.query)
+        .end(function(response) {
+            res.status(response.status).json(response.body);
+        });
+});
+
 function formatWordCountResponse(response) {
   var myMax = 100, myMin = 10;
   return response.word_count.map(function(d) {
