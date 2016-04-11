@@ -6,7 +6,7 @@ d3.json("api/titles", function(error, data) {
     minDate = dateDim.bottom(1)[0].date;
     maxDate = dateDim.top(1)[0].date;
     hitslineChart
-        .chart(function(c) { return dc.lineChart(c).interpolate('basis'); })
+        .chart(function(c) { return dc.lineChart(c); })
         .width(1000).height(600)
         .elasticY(true)
         .xAxisLabel("Date")
@@ -16,7 +16,7 @@ d3.json("api/titles", function(error, data) {
         .brushOn(false)
         .mouseZoomable(true)
         .seriesAccessor(function(d) {return "Title: " + d.key[0];})
-        .keyAccessor(function(d) {return +d.key[1];})
+        .keyAccessor(function(d) {return d.key[1];})
         .valueAccessor(function(d) {return d.value;})
         .legend(dc.legend().x(50).y(100).itemHeight(13).gap(5))
         .x(d3.time.scale().domain([minDate,maxDate]));
