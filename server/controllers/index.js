@@ -10,4 +10,12 @@ router.get('/word-cloud', function(req, res, next) {
   res.render('word-cloud', { title: 'Word Cloud' });
 });
 
+router.get('/categories', function(req, res, next) {
+  res.render('categories', { title: 'Media placement by type' });
+});
+
+router.get('/title-contest', function(req, res, next) {
+  res.render('title-contest', { title: 'Header contest by date' });
+});
+
 module.exports = router;

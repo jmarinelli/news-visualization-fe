@@ -62,8 +62,12 @@ function refresh(startDate, endDate) {
             .yAxisLabel("Hits")
             .dimension(dateDim)
             .group(counts)
+            .brushOn(false)
+            .mouseZoomable(true)
             .seriesAccessor(function(d) {return "Media: " + d.key[0];})
             .keyAccessor(function(d) {return +d.key[1];})
+            .valueAccessor(function(d) {return d.value;})
+            .legend(dc.legend().x(50).y(100).itemHeight(13).gap(5))
             .x(d3.time.scale().domain([minDate,maxDate]));
         dc.renderAll();
     });

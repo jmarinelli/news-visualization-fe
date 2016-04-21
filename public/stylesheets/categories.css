@@ -1,0 +1,44 @@
+body {
+    font: 14px/1.45 Helvetica;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+rect {
+    fill: steelblue;
+}
+
+select {
+    display: block;
+    margin-bottom: 20px;
+    size: 500px;
+    font-size: 30px;
+}
+
+input {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h4 {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.refreshButton {
+    display: block;
+}
+
+.chart {
+    display: block;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
