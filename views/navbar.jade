@@ -1,0 +1,36 @@
+
+aside#left-sidebar-nav
+   ul#slide-out.side-nav.fixed.leftside-navigation
+       li.user-details.cyan.darken-2
+           .row
+               .col.col.s4.m4.l4
+                   img.circle.responsive-img.valign.profile-image(src='images/avatar.jpg', alt='')
+               .col.col.s8.m8.l8
+                   a.btn-flat.dropdown-button.waves-effect.waves-light.white-text.profile-btn(href='#', data-activates='profile-dropdown')
+                       | Charles Bronson
+                       i.mdi-navigation-arrow-drop-down.right
+                   p.user-roal Administrator
+       li.no-padding
+           ul.collapsible.collapsible-accordion
+               li.bold
+                   a.collapsible-header.waves-effect.waves-cyan
+                       i.mdi-editor-insert-chart
+                       |  Charts
+                   .collapsible-body
+                       ul
+                           li
+                               a(href='categories') Categories
+                           li
+                               a(href='charts-chartist.html') Chartist
+                           li
+                               a(href='charts-morris.html') Morris Charts
+                           li
+                               a(href='charts-xcharts.html') xCharts
+                           li
+                               a(href='charts-flotcharts.html') Flot Charts
+                           li
+                               a(href='charts-sparklines.html') Sparkline Charts
+       li.li-hover
+           .divider
+       a.sidebar-collapse.btn-floating.btn-medium.waves-effect.waves-light.hide-on-large-only.darken-2(href='#', data-activates='slide-out')
+           i.mdi-navigation-menu

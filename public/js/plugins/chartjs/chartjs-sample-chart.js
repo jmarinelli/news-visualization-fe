@@ -132,13 +132,7 @@ var PieDoughnutChartSampleData = [
 
  window.onload = function() {
 
-  window.LineChartSample = new Chart(document.getElementById("line-chart-sample").getContext("2d")).Line(LineChartSampleData,{
-   responsive:true
-  });
-  
-  window.BarChartSample = new Chart(document.getElementById("bar-chart-sample").getContext("2d")).Bar(BarChartSampleData,{
-   responsive:true
-  });
+     refreshBarChart();
   
   window.RadarChartSample = new Chart(document.getElementById("radar-chart-sample").getContext("2d")).Radar(RadarChartSampleData,{
    responsive:true
@@ -157,4 +151,36 @@ var PieDoughnutChartSampleData = [
   
 
  };
+
+ function refreshBarChart() {
+     var url = "api/by-category?from=" + $("#startDate").val() + "&to=" + $("#endDate").val() + "&category=Deportes";
+     d3.json(url, function(error, data) {
+         mediaLabels = [];
+         mediaCounts = [];
+
+         data.forEach(function(d) {
+             mediaLabels.push(d.media);
+             mediaCounts.push(d.count);
+         });
+
+         //Sampel Bar Chart
+         var barChartData = {
+             labels: mediaLabels,
+             datasets: [
+                 {
+                     label: "News published by media",
+                     fillColor: "rgba(151,187,205,0.5)",
+                     strokeColor: "rgba(151,187,205,0.8)",
+                     highlightFill: "rgba(151,187,205,0.75)",
+                     highlightStroke: "rgba(151,187,205,1)",
+                     data: mediaCounts
+                 }
+             ]
+         };
+
+         window.BarChartSample = new Chart(document.getElementById("bar-chart-sample").getContext("2d")).Bar(barChartData,{
+             responsive:true
+         });
+     });
+ }
  
