@@ -1,17 +1,301 @@
-extends layout
-
-block content
-    link(rel='stylesheet', href='/stylesheets/categories.css')
-    select(id="categoryChooser")
-    h4 Start date
-        input(type="date" data-date-format="yyyy-mm-dd" value="2016-01-05" id="startDate")
-    h4 End date
-        input(type="date" data-date-format="yyyy-mm-dd" value="2016-01-06" id="endDate")
-    button(class="refreshButton" onClick="refresh()") Generate
-    div(class="container")
-        h2 Horizontal row chart
-        div(id='rowChart' class="chart")
-    div(class="container")
-        h2 Pie chart
-        div(id='pieChart' class="chart")
-    script(type="text/javascript" src="javascripts/categories.js")
+doctype html
+html(lang='en')
+    //
+      ================================================================================
+      Item Name: Materialize - Material Design Admin Template
+      Version: 1.0
+      Author: GeeksLabs
+      Author URL: http://www.themeforest.net/user/geekslabs
+      ================================================================================
+    head
+        meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='msapplication-tap-highlight', content='no')
+        meta(name='description', content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ")
+        meta(name='keywords', content='materialize, admin template, dashboard template, flat admin template, responsive admin template,')
+        title BronsonLabs
+        // Favicons
+        link(rel='icon', href='images/favicon/favicon-32x32.png', sizes='32x32')
+        // Favicons
+        link(rel='apple-touch-icon-precomposed', href='images/favicon/apple-touch-icon-152x152.png')
+        // For iPhone
+        meta(name='msapplication-TileColor', content='#00bcd4')
+        meta(name='msapplication-TileImage', content='images/favicon/mstile-144x144.png')
+        // For Windows Phone
+        // CORE CSS
+        link(href='css/materialize.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(href='css/style.css', type='text/css', rel='stylesheet', media='screen,projection')
+        // INCLUDED PLUGIN CSS ON THIS PAGE
+        link(href='css/prism.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(href='js/plugins/perfect-scrollbar/perfect-scrollbar.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(href='js/plugins/chartist-js/chartist.min.css', type='text/css', rel='stylesheet', media='screen,projection')
+        script(type="text/javascript" src="javascripts/crossfilter.js")
+        script(type="text/javascript" src="javascripts/d3.js")
+        script(type="text/javascript" src="javascripts/d3.layout.cloud.js")
+        script(type="text/javascript" src="javascripts/dc.js")
+        script(type="text/javascript" src="javascripts/jquery-1.12.2.js")
+        script(type="text/javascript" src="javascripts/jquery-ui.min.js")
+    body
+        // Start Page Loading
+        #loader-wrapper
+            #loader
+            .loader-section.section-left
+            .loader-section.section-right
+        // End Page Loading
+        // ////////////////////////////////////////////////////////////////////////////
+        // START HEADER
+        header#header.page-topbar
+            // start header nav
+            .navbar-fixed
+                nav.cyan
+                    .nav-wrapper
+                        h1.logo-wrapper
+                            a.brand-logo.darken-1(href='/') BronsonLabs
+                            span.logo-text BronsonLabs
+            // end header nav
+        // END HEADER
+        // ////////////////////////////////////////////////////////////////////////////
+        // START MAIN
+        #main
+            // START WRAPPER
+            .wrapper
+                include navbar
+                // ////////////////////////////////////////////////////////////////////////////
+                // START CONTENT
+                section#content
+                    // breadcrumbs start
+                    #breadcrumbs-wrapper.grey.lighten-3
+                        .container
+                            .row
+                                .col.s12.m12.l12
+                                    h5.breadcrumbs-title ChartJS
+                                    ol.breadcrumb
+                                        li
+                                            a(href='index.html') Dashboard
+                                        li
+                                            a(href='#') Chart
+                                        li.active ChartJS
+                    // breadcrumbs end
+                    // start container
+                    .container
+                        .section
+                            // Bar Chart
+                            #chartjs-bar-chart.section
+                                h4.header Dates
+                                    #input-date-picker.section
+                                        h4.header Date Picker
+                                        .row
+                                            .col.s12.m8.l9
+                                                input.datepicker(type='date' data-date-format="YYYY-MM-dd" value="2016-01-05" id="startDate" onchange="refreshBarChart()")
+                                        .row
+                                            .col.s12.m8.l9
+                                                input.datepicker(type='date' data-date-format="YYYY-MM-dd" value="2016-01-06" id="endDate" onchange="refreshBarChart()")
+                                h4.header Bar Chart
+                                .row
+                                    .col.s12.m4.l3
+                                        p
+                                            | News visualization within chosen category. (10 most shown media sources).
+                                    .col.s12.m8.l9
+                                        .sample-chart-wrapper
+                                            canvas#bar-chart-sample(height='120')
+                            .divider
+                            // Radar Chart
+                            #chartjs-radar-chart.section
+                                h4.header Radar Chart
+                                .row
+                                    .col.s12.m4.l3
+                                        p
+                                            | A radar chart is a way of showing multiple data points and the variation between them.They are often useful for comparing the points of two or more different data sets.
+                                    .col.s12.m8.l9
+                                        .sample-chart-wrapper
+                                            canvas#radar-chart-sample(height='120')
+                            .divider
+                            // Polar Area Chart
+                            #chartjs-polor-chart.section
+                                h4.header Polar Area Chart
+                                .row
+                                    .col.s12.m4.l3
+                                        p
+                                            | Polar area charts are similar to pie charts, but each segment has the same angle - the radius of the segment differs depending on the value.
+                                    .col.s12.m8.l9
+                                        .sample-chart-wrapper
+                                            canvas#polar-chart-sample(height='120')
+                            .divider
+                            // Pie & Doughnut Charts
+                            #chartjs-pie-chart.section
+                                h4.header Pie & Doughnut Charts
+                                .row
+                                    .col.s12.m4.l3
+                                        p
+                                            | Pie and doughnut charts are probably the most commonly used chart there are. They are divided into segments, the arc of each segment shows the proportional value of each piece of data.
+                                    .col.s12.m8.l9
+                                        .row
+                                            .col.s12.m6.l6
+                                                .sample-chart-wrapper
+                                                    canvas#pie-chart-sample
+                                                p.header.center Pie Charts
+                                            .col.s12.m6.l6
+                                                .sample-chart-wrapper
+                                                    canvas#doughnut-chart-sample
+                                                p.header.center Doughnut Charts
+                        // Floating Action Button
+                        .fixed-action-btn(style='bottom: 45px; right: 24px;')
+                            a.btn-floating.btn-large.red
+                                i.large.mdi-editor-mode-edit
+                            ul
+                                li
+                                    a.btn-floating.red(href='css-helpers.html')
+                                        i.large.mdi-communication-live-help
+                                li
+                                    a.btn-floating.yellow.darken-1(href='app-widget.html')
+                                        i.large.mdi-device-now-widgets
+                                li
+                                    a.btn-floating.green(href='app-calendar.html')
+                                        i.large.mdi-editor-insert-invitation
+                                li
+                                    a.btn-floating.blue(href='app-email.html')
+                                        i.large.mdi-communication-email
+                        // Floating Action Button
+                    // end container
+                // END CONTENT
+                // ////////////////////////////////////////////////////////////////////////////
+                // START RIGHT SIDEBAR NAV
+                aside#right-sidebar-nav
+                    ul#chat-out.side-nav.rightside-navigation
+                        li.li-hover
+                            a.chat-close-collapse.right(href='#', data-activates='chat-out')
+                                i.mdi-navigation-close
+                            #right-search.row
+                                form.col.s12
+                                    .input-field
+                                        i.mdi-action-search.prefix
+                                        input#icon_prefix.validate(type='text')
+                                        label(for='icon_prefix') Search
+                        li.li-hover
+                            ul.chat-collapsible(data-collapsible='expandable')
+                                li
+                                    .collapsible-header.teal.white-text.active
+                                        i.mdi-social-whatshot
+                                        | Recent Activity
+                                    .collapsible-body.recent-activity
+                                        .recent-activity-list.chat-out-list.row
+                                            .col.s3.recent-activity-list-icon
+                                                i.mdi-action-add-shopping-cart
+                                            .col.s9.recent-activity-list-text
+                                                a(href='#') just now
+                                                p Jim Doe Purchased new equipments for zonal office.
+                                        .recent-activity-list.chat-out-list.row
+                                            .col.s3.recent-activity-list-icon
+                                                i.mdi-device-airplanemode-on
+                                            .col.s9.recent-activity-list-text
+                                                a(href='#') Yesterday
+                                                p Your Next flight for USA will be on 15th August 2015.
+                                        .recent-activity-list.chat-out-list.row
+                                            .col.s3.recent-activity-list-icon
+                                                i.mdi-action-settings-voice
+                                            .col.s9.recent-activity-list-text
+                                                a(href='#') 5 Days Ago
+                                                p Natalya Parker Send you a voice mail for next conference.
+                                        .recent-activity-list.chat-out-list.row
+                                            .col.s3.recent-activity-list-icon
+                                                i.mdi-action-store
+                                            .col.s9.recent-activity-list-text
+                                                a(href='#') Last Week
+                                                p Jessy Jay open a new store at S.G Road.
+                                        .recent-activity-list.chat-out-list.row
+                                            .col.s3.recent-activity-list-icon
+                                                i.mdi-action-settings-voice
+                                            .col.s9.recent-activity-list-text
+                                                a(href='#') 5 Days Ago
+                                                p Natalya Parker Send you a voice mail for next conference.
+                                li
+                                    .collapsible-header.light-blue.white-text.active
+                                        i.mdi-editor-attach-money
+                                        | Sales Repoart
+                                    .collapsible-body.sales-repoart
+                                        .sales-repoart-list.chat-out-list.row
+                                            .col.s8 Target Salse
+                                            .col.s4
+                                                span#sales-line-1
+                                        .sales-repoart-list.chat-out-list.row
+                                            .col.s8 Payment Due
+                                            .col.s4
+                                                span#sales-bar-1
+                                        .sales-repoart-list.chat-out-list.row
+                                            .col.s8 Total Delivery
+                                            .col.s4
+                                                span#sales-line-2
+                                        .sales-repoart-list.chat-out-list.row
+                                            .col.s8 Total Progress
+                                            .col.s4
+                                                span#sales-bar-2
+                                li
+                                    .collapsible-header.red.white-text
+                                        i.mdi-action-stars
+                                        | Favorite Associates
+                                    .collapsible-body.favorite-associates
+                                        .favorite-associate-list.chat-out-list.row
+                                            .col.s4
+                                                img.circle.responsive-img.online-user.valign.profile-image(src='images/avatar.jpg', alt='')
+                                            .col.s8
+                                                p Eileen Sideways
+                                                p.place Los Angeles, CA
+                                        .favorite-associate-list.chat-out-list.row
+                                            .col.s4
+                                                img.circle.responsive-img.online-user.valign.profile-image(src='images/avatar.jpg', alt='')
+                                            .col.s8
+                                                p Zaham Sindil
+                                                p.place San Francisco, CA
+                                        .favorite-associate-list.chat-out-list.row
+                                            .col.s4
+                                                img.circle.responsive-img.offline-user.valign.profile-image(src='images/avatar.jpg', alt='')
+                                            .col.s8
+                                                p Renov Leongal
+                                                p.place Cebu City, Philippines
+                                        .favorite-associate-list.chat-out-list.row
+                                            .col.s4
+                                                img.circle.responsive-img.online-user.valign.profile-image(src='images/avatar.jpg', alt='')
+                                            .col.s8
+                                                p Weno Carasbong
+                                                p Tokyo, Japan
+                                        .favorite-associate-list.chat-out-list.row
+                                            .col.s4
+                                                img.circle.responsive-img.offline-user.valign.profile-image(src='images/avatar.jpg', alt='')
+                                            .col.s8
+                                                p Nusja Nawancali
+                                                p.place Bangkok, Thailand
+                // LEFT RIGHT SIDEBAR NAV
+            // END WRAPPER
+        // END MAIN
+        // ////////////////////////////////////////////////////////////////////////////
+        // START FOOTER
+        footer.page-footer
+            .footer-copyright
+                .container
+                    span
+                        | Copyright © 2015
+                        a.grey-text.text-lighten-4(href='http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs', target='_blank') GeeksLabs
+                        |  All rights reserved.
+                    span.right
+                        | Design and Developed by
+                        a.grey-text.text-lighten-4(href='http://geekslabs.com/') GeeksLabs
+        // END FOOTER
+        //
+          ================================================
+          Scripts
+          ================================================
+        // jQuery Library
+        script(type='text/javascript', src='js/jquery-1.11.2.min.js')
+        // materialize js
+        script(type='text/javascript', src='js/materialize.min.js')
+        // scrollbar
+        script(type='text/javascript', src='js/plugins/perfect-scrollbar/perfect-scrollbar.min.js')
+        script(type='text/javascript', src='js/plugins/material-preloader/materialPreloader.js')
+        // chartist
+        script(type='text/javascript', src='js/plugins/chartist-js/chartist.min.js')
+        // chartjs
+        script(type='text/javascript', src='js/plugins/chartjs/chart.min.js')
+        script(type='text/javascript', src='js/plugins/chartjs/chartjs-sample-chart.js')
+        // plugins.js - Some Specific JS codes for Plugin Settings
+        script(type='text/javascript', src='js/plugins.js')
