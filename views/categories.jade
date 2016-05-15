@@ -84,13 +84,21 @@ html(lang='en')
                             #chartjs-bar-chart.section
                                 h4.header Dates
                                     #input-date-picker.section
-                                        h4.header Date Picker
                                         .row
                                             .col.s12.m8.l9
-                                                input.datepicker(type='date' data-date-format="YYYY-MM-dd" value="2016-01-05" id="startDate" onchange="refreshBarChart()")
+                                                input.datepicker(type='date' value="1 January, 2016" id="startDate" onchange="refreshBarChart()")
                                         .row
                                             .col.s12.m8.l9
-                                                input.datepicker(type='date' data-date-format="YYYY-MM-dd" value="2016-01-06" id="endDate" onchange="refreshBarChart()")
+                                                input.datepicker(type='date' value="30 January, 2016" id="endDate" onchange="refreshBarChart()")
+                                h4.header Category
+                                    .row
+                                        .col.s12.m4.l3
+                                            p
+                                                | News category
+                                        .col.s12.m8.l9
+                                            .input-field.col.s12
+                                                select.browser-default(id="categoryChooser" onchange="refreshBarChart()")
+                                                    option(value="")
                                 h4.header Bar Chart
                                 .row
                                     .col.s12.m4.l3
@@ -106,7 +114,7 @@ html(lang='en')
                                 .row
                                     .col.s12.m4.l3
                                         p
-                                            | A radar chart is a way of showing multiple data points and the variation between them.They are often useful for comparing the points of two or more different data sets.
+                                            | News visualization within chosen category. (10 most shown media sources).
                                     .col.s12.m8.l9
                                         .sample-chart-wrapper
                                             canvas#radar-chart-sample(height='120')
@@ -117,28 +125,23 @@ html(lang='en')
                                 .row
                                     .col.s12.m4.l3
                                         p
-                                            | Polar area charts are similar to pie charts, but each segment has the same angle - the radius of the segment differs depending on the value.
+                                            | Top 3 medias in comparison.
                                     .col.s12.m8.l9
                                         .sample-chart-wrapper
                                             canvas#polar-chart-sample(height='120')
                             .divider
                             // Pie & Doughnut Charts
                             #chartjs-pie-chart.section
-                                h4.header Pie & Doughnut Charts
+                                h4.header Pie Chart
                                 .row
                                     .col.s12.m4.l3
                                         p
-                                            | Pie and doughnut charts are probably the most commonly used chart there are. They are divided into segments, the arc of each segment shows the proportional value of each piece of data.
+                                            | Top 3 medias in comparison.
                                     .col.s12.m8.l9
                                         .row
                                             .col.s12.m6.l6
                                                 .sample-chart-wrapper
                                                     canvas#pie-chart-sample
-                                                p.header.center Pie Charts
-                                            .col.s12.m6.l6
-                                                .sample-chart-wrapper
-                                                    canvas#doughnut-chart-sample
-                                                p.header.center Doughnut Charts
                         // Floating Action Button
                         .fixed-action-btn(style='bottom: 45px; right: 24px;')
                             a.btn-floating.btn-large.red

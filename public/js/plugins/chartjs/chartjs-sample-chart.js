@@ -132,29 +132,29 @@ var PieDoughnutChartSampleData = [
 
  window.onload = function() {
 
-     refreshBarChart();
-  
-  window.RadarChartSample = new Chart(document.getElementById("radar-chart-sample").getContext("2d")).Radar(RadarChartSampleData,{
-   responsive:true
-  });
-  
-  window.PolarChartSample = new Chart(document.getElementById("polar-chart-sample").getContext("2d")).PolarArea(PolarChartSampleData,{
-   responsive:true
-  });
-  
-  window.PieChartSample = new Chart(document.getElementById("pie-chart-sample").getContext("2d")).Pie(PieDoughnutChartSampleData,{
-   responsive:true
-  });
-  window.DoughnutChartSample = new Chart(document.getElementById("doughnut-chart-sample").getContext("2d")).Pie(PieDoughnutChartSampleData,{
-   responsive:true
-  });
-  
+     d3.json("api/categories", function(error, media) {
+         media.forEach(function(d){
+             $('#categoryChooser')
+                 .append($("<option></option>")
+                     .attr("value", d)
+                     .text(d));
+         });
+     });
 
+     refreshBarChart();
  };
 
  function refreshBarChart() {
-     var url = "api/by-category?from=" + $("#startDate").val() + "&to=" + $("#endDate").val() + "&category=Deportes";
+     var startDate = $("#startDate").val();
+     var endDate = $("#endDate").val();
+     var category = $('#categoryChooser').val();
+
+     if (startDate == "" || endDate == "" || category == "") return;
+
+     var url = "api/by-category?from=" + formatDate($("#startDate").val()) + "&to=" + formatDate($("#endDate").val()) + "&category=" + category;
      d3.json(url, function(error, data) {
+         if (data == undefined) return;
+
          mediaLabels = [];
          mediaCounts = [];
 
@@ -163,7 +163,7 @@ var PieDoughnutChartSampleData = [
              mediaCounts.push(d.count);
          });
 
-         //Sampel Bar Chart
+         // Bar chart
          var barChartData = {
              labels: mediaLabels,
              datasets: [
@@ -177,10 +177,70 @@ var PieDoughnutChartSampleData = [
                  }
              ]
          };
+         // End bar chart
+
+         // Radar Chart
+         var radarChartData = {
+             labels: mediaLabels,
+             datasets: [
+                 {
+                     label: "News published by media",
+                     fillColor: "rgba(151,187,205,0.2)",
+                     strokeColor: "rgba(151,187,205,1)",
+                     pointColor: "rgba(151,187,205,1)",
+                     pointStrokeColor: "#fff",
+                     pointHighlightFill: "#fff",
+                     pointHighlightStroke: "rgba(151,187,205,1)",
+                     data: mediaCounts
+                 }
+             ]
+         };
+         // End radar chart
+
+         // Polar and pie charts
+         newData = [];
+
+         var i = 0;
+         for (i = 0; i < 3; i++) {
+             var obj = {};
+             obj.value = data[i].count;
+             obj.label = data[i].media;
+             newData.push(obj);
+         }
+
+         newData[0].color = "#F7464A";
+         newData[0].highlight = "#FF5A5E";
+
+         newData[1].color = "#46BFBD";
+         newData[1].highlight = "#5AD3D1";
+
+         newData[2].color = "#FDB45C";
+         newData[2].highlight = "#FFC870";
+         // End polar and pie charts
 
          window.BarChartSample = new Chart(document.getElementById("bar-chart-sample").getContext("2d")).Bar(barChartData,{
              responsive:true
          });
+
+         window.RadarChartSample = new Chart(document.getElementById("radar-chart-sample").getContext("2d")).Radar(radarChartData,{
+             responsive:true
+         });
+
+         window.PolarChartSample = new Chart(document.getElementById("polar-chart-sample").getContext("2d")).PolarArea(newData,{
+             responsive:true
+         });
+
+         window.PieChartSample = new Chart(document.getElementById("pie-chart-sample").getContext("2d")).Pie(newData,{
+             responsive:true
+         });
+
      });
+ }
+
+ function formatDate(date) {
+     var d = new Date(date);
+     return d.getUTCFullYear() +"-"+
+     ("0" + (d.getUTCMonth()+1)).slice(-2) +"-"+
+     ("0" + d.getUTCDate()).slice(-2);
  }
  
