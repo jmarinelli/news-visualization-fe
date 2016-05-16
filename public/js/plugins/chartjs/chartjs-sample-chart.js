@@ -9,10 +9,10 @@ window.onload = function() {
          });
      });
 
-     refreshBarChart();
+    refresh();
  };
 
- function refreshBarChart() {
+ function refresh() {
      var startDate = $("#startDate").val();
      var endDate = $("#endDate").val();
      var category = $('#categoryChooser').val();

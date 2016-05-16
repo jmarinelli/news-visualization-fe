@@ -30,12 +30,14 @@ html(lang='en')
         link(href='css/prism.css', type='text/css', rel='stylesheet', media='screen,projection')
         link(href='js/plugins/perfect-scrollbar/perfect-scrollbar.css', type='text/css', rel='stylesheet', media='screen,projection')
         link(href='js/plugins/chartist-js/chartist.min.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(rel='stylesheet', href='/stylesheets/chosen.css')
         script(type="text/javascript" src="javascripts/crossfilter.js")
         script(type="text/javascript" src="javascripts/d3.js")
         script(type="text/javascript" src="javascripts/d3.layout.cloud.js")
         script(type="text/javascript" src="javascripts/dc.js")
         script(type="text/javascript" src="javascripts/jquery-1.12.2.js")
         script(type="text/javascript" src="javascripts/jquery-ui.min.js")
+        script(type="text/javascript" src="javascripts/bootstrap.min.js")
     body
         // Start Page Loading
         #loader-wrapper
@@ -90,58 +92,22 @@ html(lang='en')
                                         .row
                                             .col.s12.m8.l9
                                                 input.datepicker(type='date' value="30 January, 2016" id="endDate" onchange="refresh()")
-                                h4.header Category
+                                h4.header Medias
                                     .row
                                         .col.s12.m4.l3
                                             p
-                                                | News category
+                                                | Media sources
                                         .col.s12.m8.l9
                                             .input-field.col.s12
-                                                select.browser-default(id="categoryChooser" onchange="refresh()")
-                                                    option(value="")
-                                h4.header Bar Chart
+                                                select.browser-default(id="mediaChooser" multiple="true" class="mediaSelect" onchange="refresh()")
+                                h4.header Line Chart
                                 .row
                                     .col.s12.m4.l3
                                         p
-                                            | News visualization within chosen category. (10 most shown media sources).
+                                            | A line chart is a way of plotting data points on a line. Often, it is used to show trend data, and the comparison of two data sets.
                                     .col.s12.m8.l9
                                         .sample-chart-wrapper
-                                            canvas#bar-chart-sample(height='120')
-                            .divider
-                            // Radar Chart
-                            #chartjs-radar-chart.section
-                                h4.header Radar Chart
-                                .row
-                                    .col.s12.m4.l3
-                                        p
-                                            | News visualization within chosen category. (10 most shown media sources).
-                                    .col.s12.m8.l9
-                                        .sample-chart-wrapper
-                                            canvas#radar-chart-sample(height='120')
-                            .divider
-                            // Polar Area Chart
-                            #chartjs-polor-chart.section
-                                h4.header Polar Area Chart
-                                .row
-                                    .col.s12.m4.l3
-                                        p
-                                            | Top 3 medias in comparison.
-                                    .col.s12.m8.l9
-                                        .sample-chart-wrapper
-                                            canvas#polar-chart-sample(height='120')
-                            .divider
-                            // Pie & Doughnut Charts
-                            #chartjs-pie-chart.section
-                                h4.header Pie Chart
-                                .row
-                                    .col.s12.m4.l3
-                                        p
-                                            | Top 3 medias in comparison.
-                                    .col.s12.m8.l9
-                                        .row
-                                            .col.s12.m6.l6
-                                                .sample-chart-wrapper
-                                                    canvas#pie-chart-sample
+                                            canvas#line-chart-sample(height='120')
                     // end container
                 // END CONTENT
                 // ////////////////////////////////////////////////////////////////////////////
@@ -175,6 +141,6 @@ html(lang='en')
         script(type='text/javascript', src='js/plugins/chartist-js/chartist.min.js')
         // chartjs
         script(type='text/javascript', src='js/plugins/chartjs/chart.min.js')
-        script(type='text/javascript', src='js/plugins/chartjs/chartjs-sample-chart.js')
+        script(type='text/javascript', src='js/plugins/chartjs/chartjs-featured.js')
         // plugins.js - Some Specific JS codes for Plugin Settings
         script(type='text/javascript', src='js/plugins.js')
