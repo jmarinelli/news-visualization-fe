@@ -7,7 +7,7 @@ window.onload = function() {
                     .attr("value", d)
                     .text(d));
         });
-        //$(".chosen-select").chosen();
+        $(".chosen-select").chosen();
     });
 
     refresh();
@@ -61,12 +61,16 @@ function refresh() {
 
         var mediaDatasets = [];
 
+        var lineColors = ["rgba(220,220,220,0.2)", "rgba(151,187,205,0.2)", "rgba(205,151,187,0.2)", "rgba(187,205,151,0.2)"];
+        var strokeColors = ["rgba(220,220,220,1)", "rgba(151,187,205,1)", "rgba(205,151,187,1)", "rgba(187,205,151,1)"];
+
+        var i = 0;
         mediaList.forEach(function(media) {
             var dataset = {
                 label: media,
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
+                fillColor: lineColors[i % 4],
+                strokeColor: strokeColors[i % 4],
+                pointColor: strokeColors[i % 4],
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)"
@@ -85,6 +89,7 @@ function refresh() {
             dataset.data = counts;
 
             mediaDatasets.push(dataset);
+            i++;
         });
 
         // Line Chart
@@ -95,7 +100,8 @@ function refresh() {
         // End line chart
 
         window.LineChartSample = new Chart(document.getElementById("line-chart-sample").getContext("2d")).Line(lineChartData,{
-            responsive:true
+            responsive:true,
+            multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
         });
 
     });
