@@ -85,18 +85,22 @@ window.onload = function() {
          newData[2].color = "#FDB45C";
          newData[2].highlight = "#FFC870";
          // End polar and pie charts
+         if (window.BarChartSample != undefined) window.BarChartSample.destroy();
          window.BarChartSample = new Chart(document.getElementById("bar-chart-sample").getContext("2d")).Bar(barChartData,{
              responsive:true
          });
 
+         if (window.RadarChartSample != undefined) window.RadarChartSample.destroy();
          window.RadarChartSample = new Chart(document.getElementById("radar-chart-sample").getContext("2d")).Radar(radarChartData,{
              responsive:true
          });
 
+         if (window.PolarChartSample != undefined) window.PolarChartSample.destroy();
          window.PolarChartSample = new Chart(document.getElementById("polar-chart-sample").getContext("2d")).PolarArea(newData,{
              responsive:true
          });
 
+         if (window.PieChartSample != undefined) window.PieChartSample.destroy();
          window.PieChartSample = new Chart(document.getElementById("pie-chart-sample").getContext("2d")).Pie(newData,{
              responsive:true
          });

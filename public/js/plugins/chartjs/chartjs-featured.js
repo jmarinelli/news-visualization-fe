@@ -99,6 +99,7 @@ function refresh() {
         };
         // End line chart
 
+        if (window.LineChartSample != undefined) window.LineChartSample.destroy();
         window.LineChartSample = new Chart(document.getElementById("line-chart-sample").getContext("2d")).Line(lineChartData,{
             responsive:true,
             multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
