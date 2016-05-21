@@ -1,0 +1,137 @@
+doctype html
+html(lang='en')
+    //
+      ================================================================================
+      Item Name: Materialize - Material Design Admin Template
+      Version: 1.0
+      Author: GeeksLabs
+      Author URL: http://www.themeforest.net/user/geekslabs
+      ================================================================================
+    head
+        meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='msapplication-tap-highlight', content='no')
+        meta(name='description', content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ")
+        meta(name='keywords', content='materialize, admin template, dashboard template, flat admin template, responsive admin template,')
+        title BronsonLabs
+        // Favicons
+        link(rel='icon', href='images/favicon/favicon-32x32.png', sizes='32x32')
+        // Favicons
+        link(rel='apple-touch-icon-precomposed', href='images/favicon/apple-touch-icon-152x152.png')
+        // For iPhone
+        meta(name='msapplication-TileColor', content='#00bcd4')
+        meta(name='msapplication-TileImage', content='images/favicon/mstile-144x144.png')
+        // For Windows Phone
+        // CORE CSS
+        link(href='css/materialize.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(href='css/style.css', type='text/css', rel='stylesheet', media='screen,projection')
+        // INCLUDED PLUGIN CSS ON THIS PAGE
+        link(href='css/prism.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(href='js/plugins/perfect-scrollbar/perfect-scrollbar.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(href='js/plugins/chartist-js/chartist.min.css', type='text/css', rel='stylesheet', media='screen,projection')
+        link(rel='stylesheet', href='stylesheets/chosen.css')
+        script(type="text/javascript" src="javascripts/crossfilter.js")
+        script(type="text/javascript" src="javascripts/d3.js")
+        script(type="text/javascript" src="javascripts/d3.layout.cloud.js")
+        script(type="text/javascript" src="javascripts/dc.js")
+        script(type="text/javascript" src="javascripts/jquery-1.12.2.js")
+        script(type="text/javascript" src="javascripts/jquery-ui.min.js")
+        script(type="text/javascript" src="javascripts/bootstrap.min.js")
+    body
+        // Start Page Loading
+        #loader-wrapper
+            #loader
+            .loader-section.section-left
+            .loader-section.section-right
+        // End Page Loading
+        // ////////////////////////////////////////////////////////////////////////////
+        // START HEADER
+        header#header.page-topbar
+            // start header nav
+            .navbar-fixed
+                nav.cyan
+                    .nav-wrapper
+                        h1.logo-wrapper
+                            a.brand-logo.darken-1(href='/') BronsonLabs
+                            span.logo-text BronsonLabs
+            // end header nav
+        // END HEADER
+        // ////////////////////////////////////////////////////////////////////////////
+        // START MAIN
+        #main
+            // START WRAPPER
+            .wrapper
+                include navbar
+                // ////////////////////////////////////////////////////////////////////////////
+                // START CONTENT
+                section#content
+                    // breadcrumbs start
+                    #breadcrumbs-wrapper.grey.lighten-3
+                        .container
+                            .row
+                                .col.s12.m12.l12
+                                    h5.breadcrumbs-title Categories
+                                    ol.breadcrumb
+                                        li
+                                            a(href='/') Dashboard
+                                        li
+                                            a(href='#') Charts
+                                        li.active Categories by media
+                    // breadcrumbs end
+                    // start container
+                    .container
+                        .section
+                            // Bar Chart
+                            #chartjs-bar-chart.section
+                                h4.header Medias
+                                    .row
+                                        .col.s12.m4.l3
+                                            p
+                                                | Media sources
+                                        .col.s12.m8.l9
+                                            .input-field.col.s12
+                                                select.browser-default.chosen-select(id="mediaChooser" multiple="true" class="mediaSelect" onchange="refresh()")
+                                h4.header Radars
+                                .row
+                                    .col.s12.m8.l9
+                                        .sample-chart-wrapper
+                                            div#charts-container
+                            .divider
+                    // end container
+                // END CONTENT
+                // ////////////////////////////////////////////////////////////////////////////
+            // END WRAPPER
+        // END MAIN
+        // ////////////////////////////////////////////////////////////////////////////
+        // START FOOTER
+        footer.page-footer
+            .footer-copyright
+                .container
+                    span
+                        | Copyright © 2016
+                        a.grey-text.text-lighten-4(href='/', target='_blank') BronsonLabs
+                        |  All rights reserved.
+                    span.right
+                        | Design and Developed by
+                        a.grey-text.text-lighten-4(href='/') BronsonLabs
+        // END FOOTER
+        //
+          ================================================
+          Scripts
+          ================================================
+        // jQuery Library
+        script(type='text/javascript', src='js/jquery-1.11.2.min.js')
+        // materialize js
+        script(type='text/javascript', src='js/materialize.min.js')
+        // scrollbar
+        script(type='text/javascript', src='js/plugins/perfect-scrollbar/perfect-scrollbar.min.js')
+        script(type='text/javascript', src='js/plugins/material-preloader/materialPreloader.js')
+        // chartist
+        script(type='text/javascript', src='js/plugins/chartist-js/chartist.min.js')
+        // chartjs
+        script(type='text/javascript', src='js/plugins/chartjs/chart.min.js')
+        script(type="text/javascript" src="javascripts/chosen.jquery.min.js")
+        script(type='text/javascript', src='js/plugins/chartjs/chartjs-radar.js')
+        // plugins.js - Some Specific JS codes for Plugin Settings
+        script(type='text/javascript', src='js/plugins.js')

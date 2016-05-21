@@ -22,4 +22,8 @@ router.get('/title-contest', function(req, res, next) {
   res.render('title-contest', { title: 'Header contest by date' });
 });
 
+router.get('/categories-by-media', function(req, res, next) {
+  res.render('categories-by-media', { title: 'Categories by media' });
+});
+
 module.exports = router;

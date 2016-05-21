@@ -40,6 +40,15 @@ router.get('/categories', function(req, res, next) {
       });
 });
 
+router.get('/media/by-category', function(req, res, next) {
+    unirest.get('https://news-visualization-be.herokuapp.com/news-visualization/api/media/by-category')
+        .header('Accept', 'application/json')
+        .query(req.query)
+        .end(function(response) {
+            res.status(response.status).json(response.body);
+        });
+});
+
 router.get('/by-category', function(req, res, next) {
   unirest.get('https://news-visualization-be.herokuapp.com/news-visualization/api/statistics/by-category')
       .header('Accept', 'application/json')
